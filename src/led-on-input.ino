@@ -1,3 +1,5 @@
+#include "Nicla_System.h"
+
 void ledBlueOn() {
   nicla::leds.begin();
   nicla::leds.setColor(blue);
@@ -29,7 +31,7 @@ void setup() {
   nicla::leds.begin();
 
   // Open serial communications and wait for port to open:
-  Serial.begin(9600);
+  Serial.begin(115200);
   while (!Serial) {
     ;  // wait for serial port to connect. Needed for native USB port only
   }
@@ -38,6 +40,7 @@ void setup() {
 }
 
 void loop() {
+  // put your main code here, to run repeatedly:
   if (Serial.available() > 0) {
     int thisChar = Serial.read();
     Serial.print("Received: ");
