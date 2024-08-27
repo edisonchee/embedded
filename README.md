@@ -14,6 +14,8 @@ Usage:
 Usage:
 - Scan for devices to find the device youre want to connect to
 - Update `BLE_DEVICE_ADDRESS` variable
+- Currently hardcoded to read BLE Characteristics of certain handler numbers at [src/bleak.py#L25](https://github.com/edisonchee/embedded/blob/6e45cd603507757906d9de9db6304679158a970b/src/bleak.py#L25)
+- Uses an `asyncio.Queue` for collecting notifications. This is in preparation to feed data into an ML workflow for training
 
 ## References
 - [Nicla Sense ME SENSOR_ID MACRO](https://docs.arduino.cc/tutorials/nicla-sense-me/cheat-sheet/#sensor-ids)
