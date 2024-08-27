@@ -38,8 +38,14 @@ async def run_queue_consumer(queue: asyncio.Queue):
     if data is None:
       print(f"Timestamp: {timestamp}, No data")
     else:
-      print(f"Timestamp: {timestamp}, Data: {data}, {struct.unpack('f', data[0:4])}")
+      print(f"Timestamp: {timestamp}, Data: {data}, {unpack_data(data)}")
     queue.task_done()
+
+def unpack_data(data: bytearray):
+  data_list = list()
+  for i in range(0, len(data), 4):
+    data_list.append(struct.unpack('f', data[i:i+4])[0])
+  return data_list
 
 async def main():
   queue = asyncio.Queue()
