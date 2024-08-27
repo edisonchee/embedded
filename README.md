@@ -16,7 +16,9 @@ Usage:
 - Update `BLE_DEVICE_ADDRESS` variable
 
 ## References
-- [Nicla Sense ME Cheatsheet](https://docs.arduino.cc/tutorials/nicla-sense-me/cheat-sheet/)
+- [Nicla Sense ME SENSOR_ID MACRO](https://docs.arduino.cc/tutorials/nicla-sense-me/cheat-sheet/#sensor-ids)
 - [Arduino BLE documentation](https://www.arduino.cc/reference/en/libraries/arduinoble/)
+- [Arduino BLE API](https://github.com/arduino-libraries/ArduinoBLE/blob/master/docs/api.md)
 - [Arduino BHY2 UML](static/Arduino_BHY2.UML.drawio.svg)
+- [Bleak documentation](https://bleak.readthedocs.io/en/latest/index.html)
 - [BHI260AP Datasheet](https://www.bosch-sensortec.com/media/boschsensortec/downloads/datasheets/bst-bhi260ap-ds000.pdf)
