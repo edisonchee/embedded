@@ -83,7 +83,8 @@ void setup() {
   service.addCharacteristic(gasCharacteristic);
   service.addCharacteristic(rgbLedCharacteristic);
 
-  // Disconnect event handler
+  // Event handlers
+  BLE.setEventHandler(BLEConnected, blePeripheralConnectHandler);
   BLE.setEventHandler(BLEDisconnected, blePeripheralDisconnectHandler);
 
   // Sensors event handlers
@@ -99,16 +100,14 @@ void setup() {
 
   BLE.addService(service);
   BLE.advertise();
+  
+  nicla::leds.setColor(green);
 }
 
 void loop() {
-  Serial.println("Waiting to connect BLE...");
   delay(1000);
   while (BLE.connected()){
-    BHY2.update(1000);
-    BLE.poll(1000);
-    Serial.println("Connected...");
-
+    BHY2.update();
     if (gyroscopeCharacteristic.subscribed()){
       float x, y, z;
 
@@ -144,8 +143,14 @@ void loop() {
   }
 }
 
+void blePeripheralConnectHandler(BLEDevice central){
+  nicla::leds.setColor(blue);
+}
+
 void blePeripheralDisconnectHandler(BLEDevice central){
   nicla::leds.setColor(red);
+  // advertise again
+  BLE.advertise();
 }
 
 void onTemperatureCharacteristicRead(BLEDevice central, BLECharacteristic characteristic){

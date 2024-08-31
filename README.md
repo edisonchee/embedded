@@ -1,7 +1,7 @@
 # embedded
 Experiments with embedded devices
 
-## [led-on-input](src/led-on-input.ino)
+## [led-on-input](src/sketches/led-on-input.ino)
 
 Usage:
 - Connect to serial port at 115200 baud
@@ -9,7 +9,7 @@ Usage:
 - Send `B` to flash green LED
 - Send `C` to flash red LED
 
-## [ble.ino](src/ble.ino)
+## [ble.ino](src/sketches/ble.ino)
 
 Usage:
 - Scan for devices to find the device you want to connect to

@@ -1,8 +1,9 @@
-import time, asyncio, struct
+import time, asyncio, struct, csv
 from bleak import BleakScanner, BleakClient
 from bleak.backends.characteristic import BleakGATTCharacteristic
 
 BLE_DEVICE_ADDRESS = ""
+data_to_be_written = list()
 
 async def run_ble_client(queue: asyncio.Queue):
   # devices = await BleakScanner.discover()
@@ -11,7 +12,7 @@ async def run_ble_client(queue: asyncio.Queue):
   device = await BleakScanner.find_device_by_address(BLE_DEVICE_ADDRESS)
   
   async def notification_cb_handler(characteristic: BleakGATTCharacteristic, data: bytearray):
-    await queue.put((time.time(), data))
+    await queue.put((time.time_ns(), data))
     
   async with BleakClient(device) as client:
     if client.is_connected:
@@ -22,13 +23,12 @@ async def run_ble_client(queue: asyncio.Queue):
       print(f'{s.uuid} {s.handle} {s.description}')
       if s.handle == 10:
         for c in s.characteristics:
-          if c.handle == 19 or c.handle == 22 or c.handle == 25:
-            print(f'{c.uuid}')
-            await client.start_notify(c, notification_cb_handler)
-            await asyncio.sleep(5.0)
-            await client.stop_notify(c)
-            await queue.put((time.time(), None))
-            print(f'\n')
+          print(f'{c.uuid}')
+          await client.start_notify(c, notification_cb_handler)
+          await asyncio.sleep(5.0)
+          await client.stop_notify(c)
+          await queue.put((time.time(), None))
+          print(f'\n')
   
   print(f"Client is disconnected: {client.is_connected}")
 
@@ -37,8 +37,9 @@ async def run_queue_consumer(queue: asyncio.Queue):
     timestamp, data = await queue.get()
     if data is None:
       print(f"Timestamp: {timestamp}, No data")
+      return
     else:
-      print(f"Timestamp: {timestamp}, Data: {data}, {unpack_data(data)}")
+      data_to_be_written.append([timestamp] + unpack_data(data))
     queue.task_done()
 
 def unpack_data(data: bytearray):
@@ -49,11 +50,12 @@ def unpack_data(data: bytearray):
 
 async def main():
   queue = asyncio.Queue()
-  client_task = run_ble_client(queue)
-  consumer_task = run_queue_consumer(queue)
+  client_task = await run_ble_client(queue)
+  consumer_task = await run_queue_consumer(queue)
 
   try:
-    await asyncio.gather(client_task, consumer_task)
+    await asyncio.gather(*asyncio.all_tasks() - {asyncio.current_task()})
+    write_to_csv()
   except KeyboardInterrupt:
     print("Exiting...")
     client_task.cancel()
@@ -62,5 +64,13 @@ async def main():
     exit(1)
 
   exit(0)
+
+def write_to_csv():
+  with open('data.csv', 'w', newline='') as file:
+    writer = csv.writer(file)
+    writer.writerow(['timestamp', 'accel_x', 'accel_y', 'accel_z'])
+    for data in data_to_be_written:
+      data[0] = data[0] / 1000000 # Convert nanoseconds to milliseconds
+      writer.writerow(data)
 
 asyncio.run(main())
