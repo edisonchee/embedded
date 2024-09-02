@@ -17,6 +17,12 @@ Usage:
 - Currently hardcoded to read BLE Characteristics of certain handler numbers at [src/bleak.py#L25](https://github.com/edisonchee/embedded/blob/6e45cd603507757906d9de9db6304679158a970b/src/bleak.py#L25)
 - Uses an `asyncio.Queue` for collecting notifications. This is in preparation to feed data into an ML workflow for training
 
+## [acc-serial.ino](src/sketches/acc-serial.ino)
+
+Usage:
+- Much simpler sketch for transmitting acc data over serial
+- Has more bandwidth for higher sampling rate as well
+
 ## References
 - [Nicla Sense ME SENSOR_ID MACRO](https://docs.arduino.cc/tutorials/nicla-sense-me/cheat-sheet/#sensor-ids)
 - [Arduino BLE documentation](https://www.arduino.cc/reference/en/libraries/arduinoble/)
