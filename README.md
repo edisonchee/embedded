@@ -26,12 +26,13 @@ Usage:
 ## [audio-serial.ino](src/sketches/audio-serial.ino)
 
 - If you encounter this error `error: conversion from 'int' to 'audio_tools::int24_t' is ambiguous` while compiling, check `AudioConfig.h` from the Arduino Audio Tools library and see if your platform/processor is supported
-- If not supported, try defining `USE_INT24_FROM_INT` and/or other features if necessary
+  - If not supported, try defining `USE_INT24_FROM_INT` and/or other features if necessary
 
 ## References
 - [Nicla Sense ME SENSOR_ID MACRO](https://docs.arduino.cc/tutorials/nicla-sense-me/cheat-sheet/#sensor-ids)
 - [Arduino BLE documentation](https://www.arduino.cc/reference/en/libraries/arduinoble/)
 - [Arduino BLE API](https://github.com/arduino-libraries/ArduinoBLE/blob/master/docs/api.md)
 - [Arduino BHY2 UML](static/Arduino_BHY2.UML.drawio.svg)
+- [Arduino Audio Tools](https://github.com/pschatzmann/arduino-audio-tools)
 - [Bleak documentation](https://bleak.readthedocs.io/en/latest/index.html)
 - [BHI260AP Datasheet](https://www.bosch-sensortec.com/media/boschsensortec/downloads/datasheets/bst-bhi260ap-ds000.pdf)
