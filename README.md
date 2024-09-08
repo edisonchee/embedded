@@ -1,7 +1,7 @@
 # embedded
 Experiments with embedded devices. This repository contains Arduino sketches and accompanying Python scripts.
 
-## [led-on-input](src/sketches/led-on-input.ino)
+## [led-on-input.ino](src/sketches/led-on-input.ino)
 
 Usage:
 - Connect to serial port at 115200 baud
@@ -9,8 +9,7 @@ Usage:
 - Send `B` to flash green LED
 - Send `C` to flash red LED
 
-## [ble.ino](src/sketches/ble.ino)
-## [bleak.py](src/bleak.py)
+## [ble.ino](src/sketches/ble.ino)\n[bleak.py](src/bleak.py)
 
 Usage:
 - Scan for devices to find the device you want to connect to
@@ -18,15 +17,13 @@ Usage:
 - Currently hardcoded to read BLE Characteristics of certain handler numbers at [src/bleak.py#L25](https://github.com/edisonchee/embedded/blob/6e45cd603507757906d9de9db6304679158a970b/src/bleak.py#L25)
 - Uses an `asyncio.Queue` for collecting notifications. This is in preparation to feed data into an ML workflow for training
 
-## [acc-serial.ino](src/sketches/acc-serial.ino)
-## [acc_serial.py](src/acc_serial.py)
+## [acc-serial.ino](src/sketches/acc-serial.ino)\n[acc_serial.py](src/acc_serial.py)
 
 Usage:
 - Much simpler sketch for transmitting acc data over serial
 - Has more bandwidth for higher sampling rate as well
 
-## [audio-serial.ino](src/sketches/audio-serial.ino)
-## [mic_serial.py](src/mic_serial.py)
+## [audio-serial.ino](src/sketches/audio-serial.ino)\n[mic_serial.py](src/mic_serial.py)
 
 - Transmit 16-bit integer PCM from the Nicla Voice through serial port
 - This was particarly tricky to figure out because:
