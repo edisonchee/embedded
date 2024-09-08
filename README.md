@@ -25,10 +25,15 @@ Usage:
 
 ## [audio-serial.ino](src/sketches/audio-serial.ino)
 
-- If you encounter this error `error: conversion from 'int' to 'audio_tools::int24_t' is ambiguous` while compiling, check `AudioConfig.h` from the Arduino Audio Tools library and see if your platform/processor is supported
-  - If not supported, try defining `USE_INT24_FROM_INT` and/or other features if necessary
+- Transmit 16-bit integer PCM from the Nicla Voice through serial port
+- This was particarly tricky because:
+  - Arduino docs suggests that [PDM library](https://docs.arduino.cc/hardware/nicla-voice/#suggested-libraries) can be used, which is not the case
+  - Audio samples are only accessible through `NDP.extractData`. Moreover, `NDP` will only be initialised if all 3 synpkg are successfully loaded
+  - This means that your Nicla Voice will always boot with a bunch of shit printed into the Serial port, which you need to kill
+- Requires `pyserial` module
 
 ## References
+- [nRF52832](https://infocenter.nordicsemi.com/pdf/nRF52832_PS_v1.4.pdf)
 - [Nicla Sense ME SENSOR_ID MACRO](https://docs.arduino.cc/tutorials/nicla-sense-me/cheat-sheet/#sensor-ids)
 - [Arduino BLE documentation](https://www.arduino.cc/reference/en/libraries/arduinoble/)
 - [Arduino BLE API](https://github.com/arduino-libraries/ArduinoBLE/blob/master/docs/api.md)
