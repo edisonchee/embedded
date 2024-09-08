@@ -1,5 +1,5 @@
 # embedded
-Experiments with embedded devices
+Experiments with embedded devices. This repository contains Arduino sketches and accompanying Python scripts.
 
 ## [led-on-input](src/sketches/led-on-input.ino)
 
@@ -10,6 +10,7 @@ Usage:
 - Send `C` to flash red LED
 
 ## [ble.ino](src/sketches/ble.ino)
+## [bleak.py](src/bleak.py)
 
 Usage:
 - Scan for devices to find the device you want to connect to
@@ -18,15 +19,17 @@ Usage:
 - Uses an `asyncio.Queue` for collecting notifications. This is in preparation to feed data into an ML workflow for training
 
 ## [acc-serial.ino](src/sketches/acc-serial.ino)
+## [acc_serial.py](src/acc_serial.py)
 
 Usage:
 - Much simpler sketch for transmitting acc data over serial
 - Has more bandwidth for higher sampling rate as well
 
 ## [audio-serial.ino](src/sketches/audio-serial.ino)
+## [mic_serial.py](src/mic_serial.py)
 
 - Transmit 16-bit integer PCM from the Nicla Voice through serial port
-- This was particarly tricky because:
+- This was particarly tricky to figure out because:
   - Arduino docs suggests that [PDM library](https://docs.arduino.cc/hardware/nicla-voice/#suggested-libraries) can be used, which is not the case
   - Audio samples are only accessible through `NDP.extractData`. Moreover, `NDP` will only be initialised if all 3 synpkg are successfully loaded
   - This means that your Nicla Voice will always boot with a bunch of shit printed into the Serial port, which you need to kill
