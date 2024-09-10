@@ -1,13 +1,8 @@
 #include "NDP.h"
 
-typedef int16_t microphone_sample_t;
-microphone_sample_t *sample_buffer_processed;
 const uint32_t sample_length_ms = (uint32_t)5000;
 const uint16_t sample_rate = (uint16_t)16000;
 const float sample_interval_ms = (float)(0.0625);
-
-HardwareSerial &dataSerial = Serial2;
-auto& serial = Serial;
 const uint16_t read_size = (768);
 const uint16_t _samples = read_size * 3;
 uint32_t required_samples;
@@ -73,7 +68,7 @@ void loop() {
 
   delay(3000);
   while (_local_current_samples < required_samples) {
-    s = NDP.extractData(&_local_audio_buffer[read], &len);
+    NDP.extractData(&_local_audio_buffer[read], &len);
 
     if (len != 0) {
       read += len;
@@ -82,7 +77,6 @@ void loop() {
         _local_current_samples += (read / 2);
         read = 0;
       }
-
     } else {
       delay(1);
     }

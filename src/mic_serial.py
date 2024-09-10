@@ -36,7 +36,9 @@ def main():
                 data = ser.read(CHUNK_SIZE)  # Read 1024 bytes at a time
                 if not data:
                     break
-
+                # received odd number of bytes
+                if (len(data) % 2) != 0:
+                    data = data[:-1]
                 # 16-bit signed PCM samples (big endian)
                 samples = struct.unpack(f'>{len(data)//2}h', data)
                 # convert to little endian
