@@ -3,8 +3,8 @@ import wave
 import struct
 
 # Serial port configuration
-PORT = 'COM4'  # Change this to your serial port
-BAUD_RATE = 115200  # Change this to your baud rate
+PORT = '/dev/cu.usbmodem00F1F5FF3'  # Change this to your serial port
+BAUD_RATE = 1000000  # Change this to your baud rate
 CHUNK_SIZE = 1024 # Number of bytes to read at a time
 TIMEOUT = 1
 

@@ -3,7 +3,7 @@
 const uint32_t sample_length_ms = (uint32_t)5000;
 const uint16_t sample_rate = (uint16_t)16000;
 const float sample_interval_ms = (float)(0.0625);
-const uint16_t read_size = (768);
+const uint16_t read_size = 512;
 const uint16_t _samples = read_size * 3;
 uint32_t required_samples;
 
@@ -19,7 +19,7 @@ void ledRedBlink() {
 }
 
 void setup() {
-  Serial.begin(115200);
+  Serial.begin(1000000);
   nicla::begin();
   nicla::disableLDO();
   nicla::leds.begin();
@@ -60,20 +60,23 @@ void loop() {
   unsigned int len = 0;
   int s = 0;
 
+  NDP.noInterrupts();
+
   do {
     s = NDP.extractData(_local_audio_buffer, &len); // unload the previous buffer
   } while (s != 0);
 
   nicla::leds.setColor(green);
 
-  delay(3000);
+  delay(1000);
+
   while (_local_current_samples < required_samples) {
     NDP.extractData(&_local_audio_buffer[read], &len);
 
     if (len != 0) {
       read += len;
       if (read >= read_size * 2) {
-        Serial.write((byte*) _local_audio_buffer, read);
+        Serial.write(_local_audio_buffer, read);
         _local_current_samples += (read / 2);
         read = 0;
       }
